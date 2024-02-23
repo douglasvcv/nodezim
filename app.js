@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 
 app.get("/", (req, res) => {
-    res.status(200).send("Alooowwww")
+    res.sendFile(__dirname + "/html/index.html")
 })
 app.get("/novo", (req, res) =>{
     res.send("Bem-vindo")
