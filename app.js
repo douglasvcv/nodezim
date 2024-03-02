@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require("express")
 const app = express()
 const { engine } = require('express-handlebars')
+const bodyParser = require('body-parser')
 const Sequelize = require('sequelize')
 
 
@@ -12,8 +13,10 @@ const Sequelize = require('sequelize')
     app.engine('handlebars', engine({defaultLayout: 'main'}))
     app.set('view engine', 'handlebars')
 
-
-    //Connection with MySQL database
+//Body Parser
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json())
+//Connection with MySQL database
     const sequelize = new Sequelize('testenovo', 'root', process.env.MYSQLPASSWORD, {
         host: 'localhost',
         dialect: 'mysql'
@@ -21,9 +24,13 @@ const Sequelize = require('sequelize')
 
     //Routes
     app.get('/bak', (req, res) =>{
-        res.send("han han cheguei")
+        res.render('formulario')
     })
 
+    app.post('/add', (req, res) =>{
+        req.body.conteudo
+        res.send("Título: "+req.body.titulo+" Conteúdo: "+req.body.conteudo)
+    })
 
 // app.get("/", (req, res) => {
 //     res.sendFile(__dirname + "/html/index.html")
